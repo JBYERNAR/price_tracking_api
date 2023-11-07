@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Services\UserServiceInterface;
-use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -36,7 +36,6 @@ class AuthController extends AccessTokenController
      ** path="/api/user/register",
      *   tags={"Авторизация"},
      *   summary="Вход",
-     *   operationId="register",
      *  @OA\Parameter(
      *      name="name",
      *      in="query",
@@ -71,7 +70,7 @@ class AuthController extends AccessTokenController
      *   ),
      *   @OA\Response(
      *      response=201,
-     *       description="Success",
+     *       description="Успешно",
      *      @OA\JsonContent(
      *          type="object",
      *          @OA\Property(property="success", type="boolean", example="true"),
@@ -80,14 +79,13 @@ class AuthController extends AccessTokenController
      *   ),
      *   @OA\Response(
      *      response=422,
-     *      description="Validaion Failed"
+     *      description="Ошибка проверки"
      *   )
      *)
      *
      * @param RegisterRequest $request
      * @return JsonResponse
      */
-
     public function register(RegisterRequest $request): JsonResponse
     {
         $user = $this->userService->create($request->validated());
@@ -102,8 +100,7 @@ class AuthController extends AccessTokenController
     /**
      * @OA\Post (
      *     path="/api/user/login",
-     *     summary = "Login",
-     *     operationId="auth.login",
+     *     summary = "Логин",
      *     tags={"Авторизация"},
      *     @OA\RequestBody(
      *       required=true,
@@ -127,22 +124,21 @@ class AuthController extends AccessTokenController
      *     ),
      *     @OA\Response(
      *         response="200",
-     *         description="Success Login",
+     *         description="Успешно",
      *     ),
      *     @OA\Response(
      *          response="404",
-     *          description="User does not exist",
+     *          description="Пользовтель не найден",
      *      ),
      *     @OA\Response(
      *         response="401",
-     *         description="Unauthorized",
+     *         description="Не авторизован",
      *     )
      * )
      *
      * @param ServerRequestInterface $request
      * @return JsonResponse
      */
-
     public function login(ServerRequestInterface $request): JsonResponse
     {
         $inputParams = $request->getParsedBody();
@@ -178,13 +174,12 @@ class AuthController extends AccessTokenController
     /**
      * @OA\Post (
      *     path="/api/user/logout",
-     *     summary = "Logout",
-     *     operationId="auth.logout",
+     *     summary = "Выход",
      *     tags={"Авторизация"},
      *     security={ {"bearer": {} }},
      *     @OA\Response(
      *         response="200",
-     *         description="Success Logout",
+     *         description="Успешно",
      *     )
      * )
      *
@@ -206,8 +201,7 @@ class AuthController extends AccessTokenController
     /**
      * @OA\Post (
      *     path="/api/user/refresh-token",
-     *     summary = "Refresh",
-     *     operationId="auth.refresh",
+     *     summary = "Рефреш",
      *     tags={"Авторизация"},
      *     @OA\RequestBody(
      *       required=false,
@@ -224,14 +218,13 @@ class AuthController extends AccessTokenController
      *     ),
      *     @OA\Response(
      *         response="200",
-     *         description="Refresh Token",
+     *         description="Успешно",
      *     )
      * )
      *
      * @param ServerRequestInterface $request
      * @return JsonResponse
      */
-
     public function refresh(ServerRequestInterface $request): JsonResponse
     {
         $request = $request->withParsedBody([
