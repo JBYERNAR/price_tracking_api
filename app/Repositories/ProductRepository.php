@@ -18,7 +18,6 @@ class ProductRepository implements ProductRepositoryInterface
     {
         $product = $this->get($id);
         $product->update($params);
-        $product->save();
 
         return $product;
     }

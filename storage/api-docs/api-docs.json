@@ -12,7 +12,7 @@
                     "Авторизация"
                 ],
                 "summary": "Вход",
-                "operationId": "register",
+                "operationId": "c5d4be2455cfdca65ec102b1804ada91",
                 "parameters": [
                     {
                         "name": "name",
@@ -49,7 +49,7 @@
                 ],
                 "responses": {
                     "201": {
-                        "description": "Success",
+                        "description": "Успешно",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -69,7 +69,7 @@
                         }
                     },
                     "422": {
-                        "description": "Validaion Failed"
+                        "description": "Ошибка проверки"
                     }
                 }
             }
@@ -79,8 +79,8 @@
                 "tags": [
                     "Авторизация"
                 ],
-                "summary": "Login",
-                "operationId": "auth.login",
+                "summary": "Логин",
+                "operationId": "fa481c4ebcab70051c9df8d0624a47e8",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -105,13 +105,13 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Success Login"
+                        "description": "Успешно"
                     },
                     "404": {
-                        "description": "User does not exist"
+                        "description": "Пользовтель не найден"
                     },
                     "401": {
-                        "description": "Unauthorized"
+                        "description": "Не авторизован"
                     }
                 }
             }
@@ -121,11 +121,11 @@
                 "tags": [
                     "Авторизация"
                 ],
-                "summary": "Logout",
-                "operationId": "auth.logout",
+                "summary": "Выход",
+                "operationId": "1450bb66c6720716bd057bef3d23211a",
                 "responses": {
                     "200": {
-                        "description": "Success Logout"
+                        "description": "Успешно"
                     }
                 },
                 "security": [
@@ -140,8 +140,8 @@
                 "tags": [
                     "Авторизация"
                 ],
-                "summary": "Refresh",
-                "operationId": "auth.refresh",
+                "summary": "Рефреш",
+                "operationId": "ca748d0432b13945a09e685db65369c8",
                 "requestBody": {
                     "required": false,
                     "content": {
@@ -160,9 +160,223 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Refresh Token"
+                        "description": "Успешно"
                     }
                 }
+            }
+        },
+        "/api/product/create": {
+            "post": {
+                "tags": [
+                    "Товар"
+                ],
+                "summary": "Создать Товар",
+                "operationId": "c514b2e3b3f5bb8eb8137b7ccc94313b",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Успешно"
+                    },
+                    "422": {
+                        "description": "Ошибка проверки"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/product/update/{product_id}": {
+            "put": {
+                "tags": [
+                    "Товар"
+                ],
+                "summary": "Обновить Товар",
+                "operationId": "ebeb301d10792a4fb633072dc9140939",
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "price",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    },
+                    "422": {
+                        "description": "Ошибка проверки"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/product/delete/{product_id}": {
+            "delete": {
+                "tags": [
+                    "Товар"
+                ],
+                "summary": "Удалить Товар",
+                "operationId": "fc15f47e7fd32e2fa062db9a660697ac",
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    },
+                    "422": {
+                        "description": "Ошибка проверки"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/product/list": {
+            "get": {
+                "tags": [
+                    "Товар"
+                ],
+                "summary": "Список Товаров",
+                "operationId": "3662325aa8a35b7dc674fe5e24a3e2f1",
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/user-products/create": {
+            "post": {
+                "tags": [
+                    "Подписка на товар"
+                ],
+                "summary": "Подписаться на товар",
+                "operationId": "a3fecae065bb217c25b934a11f224d55",
+                "parameters": [
+                    {
+                        "name": "product_id",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Успешно"
+                    },
+                    "422": {
+                        "description": "Ошибка проверки"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/user-products/delete/{user_product_id}": {
+            "delete": {
+                "tags": [
+                    "Подписка на товар"
+                ],
+                "summary": "Отписка от товара",
+                "operationId": "c171ab7e3fc6116e581a00c57c0ebcfa",
+                "parameters": [
+                    {
+                        "name": "user_product_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    },
+                    "422": {
+                        "description": "Ошибка проверки"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/user-products/list": {
+            "get": {
+                "tags": [
+                    "Подписка на товар"
+                ],
+                "summary": "Список подписанных товаров",
+                "operationId": "8e8c1e806182fc478fe152fcfa0928ef",
+                "responses": {
+                    "200": {
+                        "description": "Успешно"
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
             }
         }
     },
