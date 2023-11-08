@@ -39,5 +39,18 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - db_data:/var/lib/postgresql/data:rw
+
+  queue-worker:
+    container_name: queue-worker
+    restart: always
+    command: [ 'php', '/var/www/artisan', 'queue:work']
+    build:
+      context: ./../
+      dockerfile: ./docker/php-fpm/Dockerfile
+    depends_on:
+      - php-fpm
+    volumes:
+      - ./../:/var/www/
+
 volumes:
   db_data:

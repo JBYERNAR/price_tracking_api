@@ -2,7 +2,7 @@
 # Variables
 ##################
 
-DOCKER_COMPOSE = docker-compose -f ./docker/docker-compose.yml --env-file ./docker/.env
+DOCKER_COMPOSE = docker-compose -f ./docker/docker-compose.yml --env-file ./docker/.env.dist
 
 ##################
 # Docker compose
@@ -44,6 +44,7 @@ app_install:
 	${DOCKER_COMPOSE} exec -u www-data php-fpm php artisan migrate:fresh --seed
 	${DOCKER_COMPOSE} exec -u www-data php-fpm php artisan vendor:publish --provider "L5Swagger\L5SwaggerServiceProvider"
 	${DOCKER_COMPOSE} exec -u www-data php-fpm php artisan l5-swagger:generate
+	${DOCKER_COMPOSE} exec -u www-data php-fpm php artisan passport:install --force
 
 app_bash:
 	${DOCKER_COMPOSE} exec -u www-data php-fpm bash
