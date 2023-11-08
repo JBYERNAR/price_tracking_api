@@ -2,11 +2,14 @@
 
 namespace App\Exceptions;
 
+use App\Enums\ApiResponseEnum;
 use App\Traits\ApiResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
+use Laravel\Passport\Exceptions\OAuthServerException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Response as ResponseCode;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -52,6 +55,14 @@ class Handler extends ExceptionHandler
                 'Маршрут не найден'
             );
         }
+
+		if ($e instanceof OAuthServerException) {
+			return $this->errorResponse(
+				null,
+				ResponseCode::HTTP_UNAUTHORIZED,
+				'Недействительный токен'
+			);
+		}
 
         Log::error($e->getMessage());
 
