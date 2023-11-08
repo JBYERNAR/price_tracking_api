@@ -37,7 +37,7 @@ class UserProductChangeNotice implements ShouldQueue
             ->toArray();
 
         $notification = sprintf(
-            'Произошли изменения в ценах на товар: %s, цена:%s',
+            'Произошли изменения в ценах на товар: %s, Цена: %s тг',
             $this->product->name,
             $this->product->price
         );

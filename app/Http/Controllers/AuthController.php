@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain\Services\UserServiceInterface;
 use App\Http\Requests\RegisterRequest;
+use App\Models\OauthClient;
 use App\Traits\ApiResponse;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -154,10 +155,11 @@ class AuthController extends AccessTokenController
             );
         }
 
+		$client = OauthClient::getClient();
         $request = $request->withParsedBody([
             'grant_type' => 'password',
-            'client_id' => env('CLIENT_ID'),
-            'client_secret' => env('CLIENT_SECRET'),
+            'client_id' => $client->id,
+            'client_secret' => $client->secret,
             'username' => $inputEmail,
             'password' => $inputPassword,
             'scope' => '*',
@@ -227,10 +229,11 @@ class AuthController extends AccessTokenController
      */
     public function refresh(ServerRequestInterface $request): JsonResponse
     {
+		$client = OauthClient::getClient();
         $request = $request->withParsedBody([
             'grant_type' => 'refresh_token',
-            'client_id' => env('CLIENT_ID'),
-            'client_secret' => env('CLIENT_SECRET'),
+			'client_id' => $client->id,
+			'client_secret' => $client->secret,
             'refresh_token' => request()->refresh_token,
             'scope' => '*',
         ]);

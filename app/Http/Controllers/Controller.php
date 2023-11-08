@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 /**
  * @OA\Info(
- *     title="Admin panel",
+ *     title="Product Price Tracking API",
  *     version="1.0.0",
  *     description="Product Price Tracking API"
  * )

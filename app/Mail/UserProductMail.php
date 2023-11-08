@@ -11,43 +11,50 @@ use Illuminate\Queue\SerializesModels;
 
 class UserProductMail extends Mailable
 {
-    use Queueable, SerializesModels;
+	use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(private $notificationData)
-    {
-        //
-    }
+	public string $notification;
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Изменений в ценах на товар',
-        );
-    }
+	/**
+	 * Create a new message instance.
+	 */
+	public function __construct(string $notification)
+	{
+		$this->notification = $notification;
+	}
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            text: $this->notificationData,
-        );
-    }
+	/**
+	 * Get the message envelope.
+	 */
+	public function envelope(): Envelope
+	{
+		return new Envelope(
+			subject: 'Изменений в ценах на товар',
+		);
+	}
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
+	/**
+	 * Get the message content definition.
+	 */
+	public function content(): Content
+	{
+		return new Content(
+			markdown: 'email.product-price',
+		);
+	}
+
+	/**
+	 * Get the attachments for the message.
+	 *
+	 * @return array<int, Attachment>
+	 */
+	public function attachments(): array
+	{
+		return [];
+	}
+
+	public function build(): UserProductMail
+	{
+		return $this->subject("Изменений в ценах на товар")->markdown('email.product-price');
+	}
 }

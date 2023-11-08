@@ -1,7 +1,7 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Admin panel",
+        "title": "Product Price Tracking API",
         "description": "Product Price Tracking API",
         "version": "1.0.0"
     },
